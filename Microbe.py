@@ -1,6 +1,7 @@
 import pygame
 from Food import Food
 import random
+from typing import Iterable
 
 MAX_NUM_OF_MICROBES = 100
 
@@ -8,7 +9,7 @@ MAX_NUM_OF_MICROBES = 100
 class Microbe:
     microbes = []
 
-    def __init__(self, color: tuple = (0, 184, 179,), speed: int = 20, radius: int = 10, center: list = None,
+    def __init__(self, color: Iterable = (0, 184, 179,), speed: int = 20, radius: int = 10, center: list = None,
                  e_to_create_child: int = 110, generation: int = 1):
         self.color = color
         self.__speed = speed
@@ -46,7 +47,7 @@ class Microbe:
         if self.__energy <= 0:
             self.delete()
 
-    def enought_to_create_child(self):
+    def enough_to_create_child(self):
         if self.energy >= self.e_to_create_child:
             return True
         return False
@@ -56,7 +57,7 @@ class Microbe:
             self.color = self.choose_random_color()
             self.energy -= self.e_to_create_child // 2
         child_color = self.choose_random_color()
-        child_speed = max(1, self.speed + self.radint_with_random_sign(10))
+        child_speed = max(1, self.speed + self.randint_with_random_sign(10))
         child_center = self.center
         child_radius = self.radius
         child_e_to_create_child = self.e_to_create_child + self.generation
@@ -68,7 +69,7 @@ class Microbe:
 
         self.energy = self.e_to_create_child // 2
 
-    def radint_with_random_sign(self, num):
+    def randint_with_random_sign(self, num):
         minus = -random.randint(0, num)
         plus = random.randint(0, num)
         if self.speed > 5:
@@ -139,16 +140,15 @@ class Microbe:
             self.eat(food)
 
     def is_opponent_eatable(self):
-        self_vectore = pygame.Vector2(self.center)
+        self_vector = pygame.Vector2(self.center)
         for microbe in Microbe.microbes:
             if self.color == microbe.color:
                 continue
-            microbe_vectore = pygame.Vector2(microbe.center)
-            if self_vectore.distance_to(microbe_vectore) < self.radius + microbe.radius:
+            microbe_vector = pygame.Vector2(microbe.center)
+            if self_vector.distance_to(microbe_vector) < self.radius + microbe.radius:
                 self.eat_life(microbe)
 
-    def choose_random_color(self, proc_of_another_color: float = 20):
+    def choose_random_color(self, proc_of_another_color: int = 20):
         return self.color if random.choice([1 for _ in range(100 - proc_of_another_color)] +
                                            [0 for _ in range(proc_of_another_color)]) else \
             (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
-

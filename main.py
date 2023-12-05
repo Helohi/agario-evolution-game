@@ -33,27 +33,27 @@ def draw_food_and_microbes():
 
 def day_passed():
     for microbe in Microbe.microbes.copy():
-        if microbe.enought_to_create_child():
+        if microbe.enough_to_create_child():
             microbe.create_child()
 
 
 def draw_text():
-    proprties_of_microbe = []
+    properties_of_microbe = []
     font = pygame.font.Font('freesansbold.ttf', 16)
     rendering_prop = True, (0, 255, 0), (0, 0, 128)
     if Microbe.microbes:
-        proprties_of_microbe.append(font.render(f"Microbes:{len(Microbe.microbes)}",
-                                                *rendering_prop))
-        proprties_of_microbe.append(font.render(f"Speed:{Microbe.microbes[-1].speed}",
-                                                *rendering_prop))
-        proprties_of_microbe.append(font.render(f"Center:{Microbe.microbes[-1].center}",
-                                                *rendering_prop))
-        proprties_of_microbe.append(font.render(f"Generation:{Microbe.microbes[-1].generation}",
-                                                *rendering_prop))
+        properties_of_microbe.append(font.render(f"Microbes:{len(Microbe.microbes)}",
+                                                 *rendering_prop))
+        properties_of_microbe.append(font.render(f"Speed:{Microbe.microbes[-1].speed}",
+                                                 *rendering_prop))
+        properties_of_microbe.append(font.render(f"Center:{Microbe.microbes[-1].center}",
+                                                 *rendering_prop))
+        properties_of_microbe.append(font.render(f"Generation:{Microbe.microbes[-1].generation}",
+                                                 *rendering_prop))
     else:
-        proprties_of_microbe.append(font.render(f"ALL DEAD", *rendering_prop))
+        properties_of_microbe.append(font.render(f"ALL DEAD", *rendering_prop))
 
-    for num, text in enumerate(proprties_of_microbe):
+    for num, text in enumerate(properties_of_microbe):
         text_rect = text.get_rect()
         text_rect.topleft = (0, num*20)
         screen.blit(text, text_rect)
